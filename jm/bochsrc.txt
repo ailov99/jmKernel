@@ -1,0 +1,23 @@
+#
+# Emulate a 32 MB machine with a 350 MHz Pentium II clock speed
+#
+megs: 32
+
+# hack to fix "undefined symbol: XpmCreatePixmapFromData" failure
+display_library: sdl
+
+# load ROM BIOS at 0xe0000 (128k length)
+# so that BIOS ends at 0xfffff
+romimage: file=/usr/share/bochs/BIOS-bochs-latest, address=0xe0000
+
+# VGA ROM BIOS loaded at 0xc0000
+vgaromimage: file=/usr/share/bochs/VGABIOS-lgpl-latest
+
+# First drive (floppy) point to loop0
+floppya: 1_44=/dev/loop0, status=inserted
+
+boot: a
+log: bochsout.txt
+mouse: enabled=0
+clock: sync=realtime
+cpu: ips=500000

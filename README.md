@@ -1,3 +1,7 @@
-This is a kernel implementation for a custom UNIX-clone OS following James Molloy's tutorial.
+This is a custom UNIX-clone OS being developed from scratch.
 
-Includes an i686-elf crosscompiler for host-system development.
+Toolchain used includes a i686-elf gcc-based crosscompiler + i686-elf binutils  for host-system development.
+
+Main sources:
+www.jamesmolloy.co.uk/tutorial_html/
+wiki.osdev.org
