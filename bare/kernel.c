@@ -66,6 +66,21 @@ size_t terminal_column;
 uint8_t terminal_color;
 uint16_t* terminal_buffer;
 
+// Terminal scrolling implementation
+// 1 line down
+void scroll_terminal()
+{
+  size_t i;
+
+  // copy each line over previous
+  for (i = 0; i < VGA_WIDTH * (VGA_HEIGHT - 1) - 1 ; ++i) 
+	terminal_buffer[i] = terminal_buffer[i + VGA_WIDTH];
+
+  // last line is empty
+  while (i < VGA_WIDTH * VGA_HEIGHT - 1)
+	terminal_buffer[++i] = ' ';
+}
+
 void terminal_setcolor(uint8_t color)
 {
   terminal_color = color;
@@ -82,6 +97,13 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
 // use default set color and current coordinates
 void terminal_putchar(char c)
 {
+  // newline implementation
+  if (c == '\n') {
+	terminal_column = 0;
+	terminal_row++;
+	return;
+  }
+  
   terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
 
   // Handle wrap-arounds
@@ -132,6 +154,5 @@ void kernel_main()
   // Initialize terminal interface
   terminal_initialize();
 
-  // TODO: implement a proper \n
   terminal_writestring("This is in the terminal!\n");
 }
